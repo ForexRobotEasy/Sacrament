@@ -1,0 +1,191 @@
+
+//+------------------------------------------------------------------+
+//|                                              Sacrament.mq5      |
+//|                            Copyright © 2022, Forex Robot Easy Team  |
+//|                                      https://forexroboteasy.com   |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                              Sacrament.mq5      |
+//|                                        Forex Robot Easy Team      |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//+------------------------------------------------------------------+
+
+#property copyright 'Copyright © 2022, Forex Robot Easy Team'
+#property link      'https://forexroboteasy.com'
+
+#property indicator_chart_window
+#property indicator_buffers 2
+#property indicator_color1 Lime
+#property indicator_color2 Red
+
+//---- input parameters
+input int Period=14;
+
+//---- buffers
+double ExtMapBuffer1[];
+double ExtMapBuffer2[];
+
+//+------------------------------------------------------------------+
+//| Custom indicator initialization function                         |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   //---- indicators
+   SetIndexStyle(0,DRAW_ARROW);
+   SetIndexArrow(0,159);
+   SetIndexBuffer(0,ExtMapBuffer1);
+   SetIndexEmptyValue(0,0.0);
+   
+   SetIndexStyle(1,DRAW_ARROW);
+   SetIndexArrow(1,159);
+   SetIndexBuffer(1,ExtMapBuffer2);
+   SetIndexEmptyValue(1,0.0);
+   
+   //---- initialization done
+   return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Custom indicator iteration function                              |
+//+------------------------------------------------------------------+
+int OnCalculate(const int rates_total,
+                const int prev_calculated,
+                const datetime &time[],
+                const double &open[],
+                const double &high[],
+                const double &low[],
+                const double &close[],
+                const long &tick_volume[],
+                const long &volume[],
+                const int &spread[])
+{
+   //---- check for possible errors
+   if(rates_total<=0)
+      return(0);
+      
+   //---- last counted bar will be recounted
+   if(prev_calculated>0)
+      prev_calculated--;
+   
+   int limit=rates_total-prev_calculated;
+   
+   //---- main loop
+   for(int i=limit; i>=0; i--)
+   {
+      //---- check for cancellation
+      if(IsStopped())
+         return(0);
+      
+      //---- call the indicator calculation
+      ExtMapBuffer1[i]=iCustom(NULL,0,'Sacrament',Period,0,i);
+      ExtMapBuffer2[i]=iCustom(NULL,0,'Sacrament',Period,1,i);
+   }
+   
+   //---- done
+   return(rates_total);
+}
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//|                                                                  |
+//+------------------------------------------------------------------+
